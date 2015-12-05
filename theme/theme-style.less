@@ -1,0 +1,213 @@
+p {
+    line-height: 1.8;
+}
+
+h1 {
+    font-size: @font-size-h1;
+}
+
+h2 {
+    font-size: @font-size-h2;
+}
+
+h3 {
+    font-size: @font-size-h3;
+}
+
+h4 {
+    font-size: @font-size-h4;
+}
+
+h5 {
+    font-size: @font-size-h5;
+}
+
+h6 {
+    font-size: @font-size-h6;
+}
+
+
+h1, h2, h3 {
+    color: @color-eggplant;
+}
+
+h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #969696;
+    text-transform: initial;
+}
+
+nav ul {
+    margin: 0;
+
+    &>li:last-child {
+        margin-bottom: 0;
+    }
+
+    &>li:first-child {
+        margin-top: 0;
+    }
+}
+
+.badge {
+    border-radius: 0;
+    &.post,
+    &.get,
+    &.put,
+    &.patch,
+    &.delete,
+    &.head,
+    &.options { 
+        background-color: inherit; 
+    }
+}
+
+section.resource-group {
+    padding: 0;
+    border: none;
+    margin-top: 3em;
+
+    h2.group-heading { 
+        margin: 20px 0;
+    }
+
+    .resource .action {
+        border-bottom: 1px solid #ECECEC;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+
+        .title {
+            margin: 0;
+            background: #efefef;
+        }
+    }
+}
+
+dl {
+    dd {
+        margin-left: 33%;
+    }
+
+    dt {
+        width: 200px;
+    }
+}
+
+.definition .uri {
+    margin-left: 10px;
+}
+
+.action.post,
+.action.get,
+.action.put,
+.action.patch,
+.action.head,
+.action.options,
+.action.delete {
+    border: none;
+
+    dl.url-params {
+        dt code {
+            border: none;
+            color: #A2A2A2;
+            margin-left: 10px;
+            background: inherit;
+            display: inline-block;
+        }
+
+        dd {
+            span.default, span.example {
+                span {
+                    margin-left: 5px;
+                }
+                display: block;
+            }
+
+            div.desc {
+                display: inline-block;
+
+                p {
+                    display: inline-block;
+                    margin: 0;
+                }
+            }
+
+            span.example {
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            span.bulb.required {
+                background: @color-mango;
+
+                &:hover::before {
+                    content: 'required';
+                    background: @color-eggplant;
+                }
+            } 
+                
+            span.bulb.optional {
+                background: @color-sky;
+
+                &:hover::before {
+                    content: 'optional';
+                    background: @color-rose;
+                }
+            }
+
+            span.bulb {
+                width: 10px;
+                height: 10px;
+                margin-right: 10px;
+                border-radius: 10px;
+                display: inline-block;
+                vertical-align: middle;
+
+                &:hover {
+                    cursor: pointer;
+
+                    &::before {
+                        display: block;
+                        position: absolute;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        margin-top: 20px;
+                        margin-left: -25px;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+
+    h4.action-heading {
+        background: #f2f2f2;
+        border-bottom-color: #f2f2f2;
+
+        .name {
+            line-height: 1.8;
+        }
+
+        .method {
+            margin-right: 0;
+        }
+
+        code {
+            border: none;
+            line-height: 1.8;
+            padding-left: 15px;
+            display: inline-block;
+            font-weight: bold;
+        }
+    }
+}
+
+table.headers {
+    width: 100%;
+    tbody {
+        tr td {
+            font-family: @code-font;
+            text-align: center;
+        }
+    }
+}
