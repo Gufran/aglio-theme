@@ -16,7 +16,7 @@ THEME := --theme-variables theme/theme-variables.less	\
 	--theme-template theme/templates/index.jade 
 
 .PHONY : latest
-latest: blueprint.api				\
+latest: blueprint  \
 	generate
 
 .PHONY: draft
@@ -27,7 +27,8 @@ draft:
 generate: draft
 	@aglio --no-cendense $(THEME) -s -i ./blueprint.api -o index.html
 
-blueprint.api:
+.PHONY : blueprint
+blueprint:
 	@git show $(REMOTE)/$(BRANCH):$(SOURCE) > blueprint.api
 
 .PHONY : clean
