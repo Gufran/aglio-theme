@@ -3,10 +3,16 @@
 # Remote and branch name to generate the documentation from 
 # if you need the documentation from a different branch or remote
 # you can do so by invoking `make latest` in following way:
-#    REMOTE=stage BRANCH=patch make latest
+#    make latest REMOTE=stage BRANCH=patch 
+#
+# You can also use `args` variable to provide additional arguments
+# for aglio, for example, to start a server you can run
+# 	 make latest arg=-s
+#
 REMOTE := origin
 BRANCH := master
 SOURCE := blueprint.api
+arg    := 
 
 export NOCACHE=1
 
@@ -25,7 +31,7 @@ draft:
 
 .PHONY : generate
 generate: draft
-	@aglio --no-cendense $(THEME) -s -i ./blueprint.api -o index.html
+	@aglio --no-cendense $(THEME) -i ./blueprint.api -o index.html $(arg)
 
 .PHONY : blueprint
 blueprint:

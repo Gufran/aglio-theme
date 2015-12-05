@@ -56,7 +56,8 @@ command will first download the `blueprint.api` file from `master` branch on `or
 use `aglio` to generate the documentation with this custom theme. 
 
 ## TODO
- - [] Use https://apiembed.com/ to embed code snippets for every API request
+
+ - [ ] Use https://apiembed.com/ to embed code snippets for every API request
 
 ## Contribution
 All contributions are welcome. Please fork the repository and send a pull request with your changes.
