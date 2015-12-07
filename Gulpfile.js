@@ -16,35 +16,15 @@ function HAR(json) {
         }
     })
 
-    var groups = json.resourceGroups;
-
     json.resourceGroups.forEach(function(group) {
-        var request = {
-            HAR: {},
-            info: {}
-        };
-
-        request.info = {
-            group: group.name
-        };
-
-        request.HAR.headersSize = -1;
-        request.HAR.bodySize = -1;
-
         group.resources.forEach(function(resource) {
-            request.info.resource = resource.name;
-
             resource.actions.forEach(function(action) {
-                request.info.method = action.method;
-
-                request.HAR.method = action.method;
-                request.HAR.url = host + resource.uriTemplate;
-                request.HAR.httpVersion = 'HTTP/1.1';
-                request.HAR.queryString = [];
+                
+                var queryString = [];
 
                 action.parameters.forEach(function(param) {
                     param.values.forEach(function(val) {
-                        request.HAR.queryString.push({
+                        queryString.push({
                             name: param.name,
                             value: val.value,
                         })
@@ -53,17 +33,35 @@ function HAR(json) {
 
                 action.examples.forEach(function(ex) {
                     ex.requests.forEach(function(r) {
+                        var request = {
+                            HAR: {},
+                            info: {
+                                group: group.name,
+                                method: action.method,
+                                resource: resource.name,
+                                name: action.name,
+                            }
+                        };
+                        
+                        request.HAR.queryString = queryString;
+                        request.HAR.method = action.method;
+                        request.HAR.url = host + resource.uriTemplate;
+                        request.HAR.httpVersion = 'HTTP/1.1';
+                        request.HAR.queryString = [];
+                        request.HAR.headersSize = -1;
+                        request.HAR.bodySize = -1;
                         request.HAR.headers = r.headers;
+
                         request.HAR.postData = {
                             mimeType: 'application/json',
                             text: r.body
                         }
+
+                        requests.push(request);
                     });
                 })
             });
         });
-
-        requests.push(request);
     });
 
     return requests;
@@ -78,8 +76,11 @@ gulp.task('default', function() {
         if(e.code != 'EEXIST') throw e;
     }
 
-    HAR(json).forEach(function(req) {
-        var fname = req.info.group + req.info.resource + req.info.method + '.json';
+    var har = HAR(json);
+
+    har.forEach(function(req) {
+        var fname = req.info.group + req.info.resource + req.info.method + req.info.name.replace(/\s/g, "_") + '.json';
+        console.log("  writing HAR file " + fname)
         fs.writeFileSync(targetDir + '/' + fname, JSON.stringify(req.HAR));
     });
 });

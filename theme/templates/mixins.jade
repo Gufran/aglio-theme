@@ -148,9 +148,9 @@ mixin Examples(resourceGroup, resource, action)
             each response in example.responses
                 +RequestResponse('Response', response, true)
             each request in example.requests
-                +RequestCodeSnippet(resourceGroup.name, resource.name, action.method)
+                +RequestCodeSnippet(resourceGroup.name, resource.name, action.method, action.name)
 
-mixin RequestCodeSnippet(group, resource, method)
+mixin RequestCodeSnippet(group, resource, method, name)
     .title
         strong
             | Code Snippets
@@ -160,7 +160,8 @@ mixin RequestCodeSnippet(group, resource, method)
     .collapse-content
         .inner.snippet-embed
             - var targets = 'shell:curl,go:native,python:requests,php:curl,ruby:native,node:unirest,java:unirest,objc:nsurlsession,javascript:xhr'
-            - var embed = '//api.apiembed.com/?source=' + self.api.host + '/har/' +group+resource+method+ '.json&targets=' + targets
+            - var fname = group + resource + method + name.replace(/\s/g, '_')
+            - var embed = '//api.apiembed.com/?source=' + self.api.host + '/har/' + fname + '.json&targets=' + targets
             iframe(src=embed frameborder="0" scrolling="no" width="100%" height="500px")
 
 mixin Content()
