@@ -27,7 +27,7 @@ latest: blueprint  \
 
 .PHONY: draft
 draft:
-	@drafter blueprint.api -o apidraft.json -f json -t ast
+	@drafter blueprint.api -o apidraft.json -f json -t ast && gulp
 
 .PHONY : generate
 generate: draft
