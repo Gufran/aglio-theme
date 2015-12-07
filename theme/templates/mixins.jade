@@ -142,10 +142,26 @@ mixin RequestResponseBody(request, collapse, showBlank)
 
 mixin Examples(resourceGroup, resource, action)
     each example in action.examples
-        each request in example.requests
-            +RequestResponse('Request', request, true)
-        each response in example.responses
-            +RequestResponse('Response', response, true)
+        .request-response-group
+            each request in example.requests
+                +RequestResponse('Request', request, true)
+            each response in example.responses
+                +RequestResponse('Response', response, true)
+            each request in example.requests
+                +RequestCodeSnippet(resourceGroup.name, resource.name, action.method)
+
+mixin RequestCodeSnippet(group, resource, method)
+    .title
+        strong
+            | Code Snippets
+        .collapse-button
+            span.close Hide
+            span.open Show
+    .collapse-content
+        .inner.snippet-embed
+            - var targets = 'shell:curl,go:native,python:requests,php:curl,ruby:native,node:unirest,java:unirest,objc:nsurlsession,javascript:xhr'
+            - var embed = '//api.apiembed.com/?source=' + self.api.host + '/har/' +group+resource+method+ '.json&targets=' + targets
+            iframe(src=embed frameborder="0" scrolling="no" width="100%" height="500px")
 
 mixin Content()
     //- Page header and API description

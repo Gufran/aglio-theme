@@ -221,3 +221,15 @@ window.onload = function () {
     // Remove the `preload` class to enable animations
     document.querySelector('body').className = '';
 };
+
+$(document).ready(function(){
+    $('ul.tabs li.tab-link').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li.tab-link').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    })
+});
